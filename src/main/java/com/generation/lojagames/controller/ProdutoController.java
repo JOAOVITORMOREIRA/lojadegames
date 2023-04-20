@@ -1,5 +1,6 @@
 package com.generation.lojagames.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,5 +80,17 @@ public class ProdutoController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		
 		produtoRepository.deleteById(id);
+	}
+		
+		@GetMapping("/preco_maior/{preco}")
+		public ResponseEntity<List<Produto>> getByPrecoMaiorQue(@PathVariable BigDecimal preco){
+			return ResponseEntity.ok(produtoRepository.findAllByPrecoGreaterThanEqualOrderByPreco(preco));
+
+	}
+		
+		@GetMapping("/preco_menor/{preco}")
+		public ResponseEntity<List<Produto>> getByPrecoMenorQuer(@PathVariable BigDecimal preco){
+			return ResponseEntity.ok(produtoRepository.findAllByPrecoLessThanEqualOrderByPrecoDesc(preco));
+
 	}
 }
